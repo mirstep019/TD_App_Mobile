@@ -1,5 +1,5 @@
 import React from 'react';
-import MainContainer from './.expo/components/MainContainer'
+import MainContainer from './components/MainContainer';
 
 export default function App(){
     return(
