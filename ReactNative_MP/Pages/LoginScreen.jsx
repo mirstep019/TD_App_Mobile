@@ -3,13 +3,13 @@ import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import Logo from '../components/Logo';
 
-export default function LoginScreen(props) {
+export default function LoginScreen({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
   const handleLogin = () => {
-    props.onLogin()
+    onLogin();
     navigation.navigate('Home');
   };
   return (
@@ -31,8 +31,6 @@ export default function LoginScreen(props) {
             <ButtonText>Login</ButtonText>
           </Button>
         </ComponentContainer>
-
-          
       </Container>
   );
 };
@@ -124,7 +122,7 @@ export const Title = styled.Text`
   font-weight: 800; 
   margin-bottom: 30px;
   margin-bottom: 30px;
-  color: #fff;
+  color: rgb(124, 124, 124);
   margin-left: 5px;
 `;
 
@@ -137,7 +135,7 @@ export const Input = styled.TextInput`
   padding: 15px; 
   font-size: 18px;
   margin-bottom: 20px;
-  background-color: #EAE2FF;
+  background-color: rgb(240 235 255);
 `;
 
 export const Button = styled.TouchableOpacity`
