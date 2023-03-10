@@ -37,9 +37,9 @@ export default function MainContainer() {
               let rn = route.name;
 
               if (rn === homeName) {
-                iconName = focused ? 'home' : 'home-outline';
+                iconName = focused ? 'barbell' : 'barbell-outline';
               } else if (rn === statsName) {
-                iconName = focused ? 'list' : 'list-outline';
+                iconName = focused ? 'cellular' : 'cellular-outline';
               } else if (rn === profileName) {
                 iconName = focused ? 'settings' : 'settings-outline';
               }

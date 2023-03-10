@@ -51,12 +51,11 @@ const Container = styled.View`
 `;
 
 const ButtonBox = styled.View`
-  margin-top: 15px;
   position: relative;
   width: 80%;
-  height: 40px;
+  height: 35px;
   background-color: #3a0b7e;
-  border-radius: 15px;
+  border-radius: 12px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -67,9 +66,9 @@ const ButtonContainer = styled(Animated.View)`
   top: 2px;
   left: 2px;
   width: 50%;
-  height: 36px;
+  height: 31px;
   background-color: #5c16c4;
-  border-radius: 13px;
+  border-radius: 10px;
 `;
 
 const Button = styled.View`
@@ -89,5 +88,6 @@ const ButtonText = styled.Text`
   font-size: 16px;
   font-weight: 500;
 `;
+
 
 export default TextSwitcher;
