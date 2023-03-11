@@ -1,39 +1,80 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import Logo from '../components/Logo';
 
 export default function LoginScreen({ onLogin }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigation = useNavigation();
+  
+  const [data, setData] = useState({
+    trainerId: '',
+    userName: '',
+    password: '',
+  })
 
+  const [errors, setErrors] = useState({});
+  const  [isLoading, setIsLoading] = useState(false);
+  const navigation = useNavigation();
+ 
   const handleLogin = () => {
-    onLogin();
-    navigation.navigate('Home');
+    console.log('data', data);
+    if (!data.trainerId || !data.userName || !data.password) {
+      setErrors({
+        trainerId: !data.trainerId ? 'This field is required' : '',
+        userName: !data.userName ? 'This field is required' : '',
+        password: !data.password ? 'This field is required' : '',
+      });
+    } else {
+      setIsLoading(true);
+      axios.post('https://xn--treninkovdenkapi-ksb8z.azurewebsites.net/api/User/Login?trainerId=' + data.trainerId + '&userName=' + data.userName + '&password=' + data.password)
+        .then(response => {
+          setData({
+            trainerId: '',
+            userName: '',
+            password: '',
+          });
+          console.log('password', data.password);
+          onLogin();
+          navigation.navigate('Home');
+        })
+        .catch(error => {
+          console.log('error', error);
+        })
+        setIsLoading(false);
+        
+    }
   };
+  
   return (
-      <Container>
-        <Background>
-          <BigRectangle />
-          <SmallRectangleTop />
-          <SmallRectangleBottom />
-          <Circle />
-        </Background>
-        <ComponentContainer>
-          <NameOfApp>
-            <Logo/>
-            <Title><MainLetter>T</MainLetter>raining <MainLetter>D</MainLetter>iary</Title>
-          </NameOfApp>
-          <Input placeholder="Email" value={email} onChangeText={setEmail}/>
-          <Input placeholder="Password" secureTextEntry value={password} onChangeText={setPassword}/>
-          <Button onPress={handleLogin}>
-            <ButtonText>Login</ButtonText>
-          </Button>
-        </ComponentContainer>
-      </Container>
+    <Container>
+      <Background>
+        <BigRectangle />
+        <SmallRectangleTop />
+        <SmallRectangleBottom />
+        <Circle />
+      </Background>
+      <ComponentContainer>
+        <NameOfApp>
+          <Logo/>
+          <Title><MainLetter>T</MainLetter>raining <MainLetter>D</MainLetter>iary</Title>
+        </NameOfApp>
+        {errors.trainerId && <ErrorText>{errors.trainerId}</ErrorText>}
+        <Input placeholder="Trainer ID" keyboardType="numeric" value={data.trainerId} onChangeText={(value) => setData({...data, trainerId: value})}/>
+        {errors.userName && <ErrorText>{errors.userName}</ErrorText>}
+        <Input placeholder="Your Username" secureTextEntry={false} value={data.userName} onChangeText={(value) => setData({...data, userName: value})} />
+        {errors.password && <ErrorText>{errors.password}</ErrorText>}
+        <Input placeholder="Your Password" secureTextEntry value={data.password} onChangeText={(value) => setData({...data, password: value})} />
+        <Button onPress={handleLogin}>
+          <ButtonText>{isLoading ? 'Loading...' : 'Login'}</ButtonText>
+         </Button>
+      </ComponentContainer>
+    </Container>
   );
 };
+
+const ErrorText = styled.Text`
+  color: red;
+`;
 
 export const Container = styled.View`
   display: flex;

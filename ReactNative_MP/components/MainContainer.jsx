@@ -6,13 +6,19 @@ import HomeScreen from '../Pages/HomeScreen';
 import StatsScreen from '../Pages/StatsScreen';
 import ProfileScreen from '../Pages/ProfileScreen';
 import LoginScreen from '../Pages/LoginScreen';
+import DetailsScreen from '../Pages/DetailsScreen';
+import { createStackNavigator } from '@react-navigation/stack';
+import CustomTopBar2 from '../components/CustomTopBar2';
 
 const homeName = 'Home';
 const statsName = 'Stats';
 const profileName = 'Profile';
 const loginName = 'Login';
+const trainDetails = 'Details';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
 
 export default function MainContainer() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -49,14 +55,32 @@ export default function MainContainer() {
             },
           })}
         >
-          <Tab.Screen name={homeName} component={HomeScreen} />
+          <Tab.Screen name={homeName}>
+            {() => (
+              <Stack.Navigator>
+                <Stack.Screen
+                  name={homeName}
+                  component={HomeScreen}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name={trainDetails}
+                  component={DetailsScreen}
+                  options={{ headerShown: false }}
+                />
+              </Stack.Navigator>
+            )}
+          </Tab.Screen>
           <Tab.Screen name={statsName} component={StatsScreen} />
           <Tab.Screen name={profileName} options={{ title: 'Profile' }}>
             {(props) => <ProfileScreen {...props} onLogout={handleLogout} />}
           </Tab.Screen>
         </Tab.Navigator>
       ) : (
-        <LoginScreen name={loginName} onLogin={handleLogin} />
+        <>
+          <LoginScreen name={loginName} onLogin={handleLogin} />
+          <DetailsScreen name={trainDetails} />
+        </>
       )}
     </NavigationContainer>
   );

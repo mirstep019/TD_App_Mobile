@@ -2,14 +2,20 @@ import React from 'react';
 import styled from 'styled-components/native';
 import TextSwitcher from '../components/ButtonWow';
 import Logo from '../components/Logo';
+import { Ionicons } from '@expo/vector-icons';
 
-const CustomTopBar2 = ({ title }) => {
+const CustomTopBar2 = ({ title, title2, onPressBack }) => {
+
   return (
     <Container>
-      <LinedLogo>
-        <Lefted><Logo/></Lefted>
-        <Title>{title}</Title>
-      </LinedLogo>
+      <BackButton onPress={onPressBack}>
+        <BackContainer>
+          <Ionicons name="chevron-back" size={24} color="white" />
+          <BackText>Back</BackText>
+        </BackContainer>
+      </BackButton>
+      <Title>{title}</Title>
+      <Title2>{title2}</Title2>
     </Container>
   );
 };
@@ -26,25 +32,40 @@ const Container = styled.View`
   z-index: 9999;
 `;
 
+const BackContainer = styled.View`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+`;
+
 const Title = styled.Text`
   color: #fff;
   font-size: 20px;
   font-weight: bold;
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin-top: 35px;
+`;
+const Title2 = styled.Text`
+  color: #fff;
+  font-size: 18px;
+  margin-top: 20px;
 `;
 
-const LinedLogo = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+const BackText = styled.Text`
+  color: #fff;
+  font-size: 18px;
   align-items: center;
 `;
 
-const Lefted = styled.View`
+const BackButton = styled.TouchableOpacity`
   position: absolute;
-  left: -90px;
-  top: 30px;
+  left: 16px;
+  top: 60px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default CustomTopBar2;
